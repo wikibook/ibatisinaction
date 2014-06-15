@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Category">
+
+  <typeAlias alias="category" type="org.apache.ibatis.jgamestore.domain.Category"/>
+
+  <cacheModel id="categoryCache" type="LRU">
+    <flushInterval hours="24"/>
+    <property name="size" value="100"/>
+  </cacheModel>
+
+  <resultMap id="categoryResult" class="category">
+    <result property="categoryId" column="CATEGORYID"/>
+    <result property="name" column="NAME"/>
+    <result property="color" column="COLOR"/>
+    <result property="description" column="DESCRIPTION"/>
+    <result property="image" column="IMAGE"/>
+  </resultMap>
+
+  <select id="getCategory" resultClass="category" parameterClass="string" cacheModel="categoryCache">
+    SELECT
+      CATEGORYID,
+      NAME,
+      COLOR,
+      DESCRIPTION
+    FROM CATEGORY
+    WHERE CATEGORYID = #categoryId#
+  </select>
+
+  <select id="getCategoryList" resultClass="category" cacheModel="categoryCache">
+    SELECT
+      CATEGORYID,
+      NAME,
+      COLOR,
+      DESCRIPTION
+    FROM CATEGORY
+    ORDER BY NAME
+  </select>
+
+</sqlMap>

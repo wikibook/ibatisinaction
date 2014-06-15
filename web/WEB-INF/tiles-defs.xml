@@ -1,0 +1,94 @@
+<!--
+<!DOCTYPE tiles-definitions PUBLIC 
+    "-//Apache Software Foundation//DTD Tiles Configuration//EN" 
+    "http://struts.apache.org/dtds/tiles-config.dtd">
+-->
+<tiles-definitions>
+
+	<!--  public -->
+    <definition name="layout.main" path="/pages/main.jsp" >
+        <put name="header" value="/pages/common/header.jsp" />
+        <put name="topMenu" value="/pages/common/topMenu-blank.jsp"/>
+        <put name="footer" value="/pages/common/footer.jsp" />
+        <put name="left" value="/pages/common/left-blank.jsp" />
+    </definition>
+
+    <definition name="layout.catalog" extends="layout.main" >
+        <put name="header" value="/pages/common/header.jsp" />
+        <put name="topMenu" value="/pages/common/topMenu.jsp"/>
+        <put name="footer" value="/pages/common/footer.jsp" />
+        <put name="left" value="/pages/common/left.jsp" />
+    </definition>
+    
+    <definition name="layout.catalog.notopmenu" extends="layout.main" >
+        <put name="header" value="/pages/common/header.jsp" />
+        <put name="topMenu" value="/pages/common/topMenu-blank.jsp"/>
+        <put name="footer" value="/pages/common/footer.jsp" />
+        <put name="left" value="/pages/common/left.jsp" />
+    </definition>
+
+    <definition name="error.tiles" extends="layout.main" >
+        <put name="body" value="/pages/common/Error.jsp" />
+    </definition>
+
+    <definition name="index.tiles" extends="layout.catalog" >
+        <put name="body" value="/pages/catalog/Main.jsp" />
+    </definition>
+
+    <definition name="advancedSearch.tiles" extends="layout.catalog.notopmenu" >
+        <put name="body" value="/pages/catalog/SearchForm.jsp" />
+    </definition>
+
+    <definition name="searchProducts.tiles" extends="layout.catalog.notopmenu" >
+        <put name="body" value="/pages/catalog/SearchProducts.jsp" />
+    </definition>
+    
+    <definition name="category.tiles" extends="layout.catalog" >
+        <put name="body" value="/pages/catalog/Category.jsp" />
+    </definition>
+
+    <definition name="product.tiles" extends="layout.catalog" >
+        <put name="body" value="/pages/catalog/Product.jsp" />
+    </definition>
+
+    <definition name="item.tiles" extends="layout.catalog" >
+        <put name="body" value="/pages/catalog/Item.jsp" />
+    </definition>    
+
+    <definition name="cart.tiles" extends="layout.main" >
+        <put name="body" value="/pages/cart/Cart.jsp" />
+    </definition>
+
+    <definition name="checkout.tiles" extends="layout.main" >
+        <put name="body" value="/pages/cart/Checkout.jsp" />
+    </definition>
+
+    <definition name="newaccountform.tiles" extends="layout.main" >
+        <put name="body" value="/pages/account/NewAccountForm.jsp" />
+    </definition>
+
+    <definition name="editaccountform.tiles" extends="layout.main" >
+        <put name="body" value="/pages/account/EditAccountForm.jsp" />
+    </definition>
+
+    <definition name="neworderform.tiles" extends="layout.main" >
+        <put name="body" value="/pages/order/NewOrderForm.jsp" />
+    </definition>
+
+    <definition name="confirmorder.tiles" extends="layout.main" >
+        <put name="body" value="/pages/order/ConfirmOrder.jsp" />
+    </definition>
+
+    <definition name="shippingform.tiles" extends="layout.main" >
+        <put name="body" value="/pages/order/ShippingForm.jsp" />
+    </definition>
+
+    <definition name="vieworder.tiles" extends="layout.main" >
+        <put name="body" value="/pages/order/ViewOrder.jsp" />
+    </definition>
+
+    <definition name="listorders.tiles" extends="layout.main" >
+        <put name="body" value="/pages/order/ListOrders.jsp" />
+    </definition>
+
+</tiles-definitions>

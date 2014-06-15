@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--  
+<!DOCTYPE struts-config PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+-->
+    
+<struts-config>
+
+  <form-beans>
+    <form-bean name="accountBean" type="org.apache.ibatis.jgamestore.presentation.AccountBean"/>
+    <form-bean name="catalogBean" type="org.apache.ibatis.jgamestore.presentation.CatalogBean"/>
+    <form-bean name="cartBean" type="org.apache.ibatis.jgamestore.presentation.CartBean"/>
+    <form-bean name="orderBean" type="org.apache.ibatis.jgamestore.presentation.OrderBean"/>
+  </form-beans>
+
+  <global-exceptions>
+    <exception key="errors.general" type="java.lang.Exception" path="error.tiles"/>
+  </global-exceptions>
+
+  <global-forwards>
+    <forward name="failure" path="error.tiles"/>
+    <forward name="error" path="error.tiles"/>
+    <forward name="newOrderForm" path="neworderform.tiles"/>
+  </global-forwards>
+
+  <action-mappings>
+
+    <action path="/index" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" parameter="index" validate="false">
+      <forward name="success" path="index.tiles"/>
+    </action>
+
+    <!-- CATALOG ACTIONS -->
+
+    <action path="/advancedSearch" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" scope="session"
+            validate="false">
+      <forward name="success" path="advancedSearch.tiles"/>
+    </action>
+
+    <action path="/searchProducts" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" scope="session"
+            validate="false">
+      <forward name="success" path="searchProducts.tiles"/>
+    </action>
+
+    <action path="/switchSearchListPage" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" scope="session" parameter="switchProductListPage"
+            validate="false">
+      <forward name="success" path="searchProducts.tiles"/>
+    </action>
+
+    <action path="/viewCategory" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" scope="session"
+            validate="false">
+      <forward name="success" path="category.tiles"/>
+    </action>
+
+    <action path="/switchProductListPage" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" scope="session"
+            validate="false">
+      <forward name="success" path="category.tiles"/>
+    </action>
+
+    <action path="/viewProduct" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" scope="session"
+            validate="false">
+      <forward name="success" path="product.tiles"/>
+    </action>
+
+    <action path="/switchItemListPage" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" scope="session"
+            validate="false">
+      <forward name="success" path="product.tiles"/>
+    </action>
+
+    <action path="/viewItem" type="org.apache.struts.beanaction.BeanAction"
+            name="catalogBean" scope="session"
+            validate="false" input="product.tiles">
+      <forward name="success" path="item.tiles"/>
+    </action>
+
+    <!-- CART ACTIONS -->
+
+    <action path="/addItemToCart" type="org.apache.struts.beanaction.BeanAction"
+            name="cartBean" scope="session" validate="false">
+      <forward name="success" path="cart.tiles"/>
+    </action>
+
+    <action path="/removeItemFromCart" type="org.apache.struts.beanaction.BeanAction"
+            name="cartBean" scope="session"
+            validate="false">
+      <forward name="success" path="cart.tiles"/>
+    </action>
+
+    <action path="/updateCartQuantities" type="org.apache.struts.beanaction.BeanAction"
+            name="cartBean" scope="session"
+            validate="false">
+      <forward name="success" path="cart.tiles"/>
+    </action>
+
+    <action path="/checkout" type="org.apache.struts.beanaction.BeanAction"
+            name="orderBean" scope="session" parameter="newOrderForm"
+            validate="false" >
+      <forward name="success" path="checkout.tiles"/>
+    </action>
+
+    <action path="/viewCart" type="org.apache.struts.beanaction.BeanAction"
+            name="cartBean" scope="session"
+            validate="false">
+      <forward name="success" path="cart.tiles"/>
+    </action>
+
+    <action path="/switchMyListPage" type="org.apache.struts.beanaction.BeanAction"
+            name="accountBean" scope="session"
+            validate="false">
+      <forward name="success" path="cart.tiles"/>
+    </action>
+
+    <!-- ACCOUNT ACTIONS -->
+
+    <action path="/newAccountForm" type="org.apache.struts.beanaction.BeanAction"
+            name="accountBean" scope="session" parameter="*"
+            validate="false">
+      <forward name="success" path="newaccountform.tiles"/>
+    </action>
+
+    <action path="/newAccount" type="org.apache.struts.beanaction.BeanAction"
+            name="accountBean" scope="session"
+            validate="true" input="newaccountform.tiles">
+      <forward name="failure" path="newaccountform.tiles"/>
+      <forward name="success" path="index.tiles"/>
+    </action>
+
+    <action path="/editAccountForm" type="org.apache.struts.beanaction.BeanAction"
+            name="accountBean" scope="session"
+            validate="false">
+      <forward name="success" path="editaccountform.tiles"/>
+    </action>
+
+    <action path="/editAccount" type="org.apache.struts.beanaction.BeanAction"
+            name="accountBean" scope="session"
+            validate="true" input="editaccountform.tiles">
+      <forward name="success" path="editaccountform.tiles"/>
+    </action>
+
+    <action path="/signon" type="org.apache.struts.beanaction.BeanAction"
+            name="accountBean" scope="session"
+            validate="false">
+            <forward name="success" path="index.tiles"/>
+    </action>
+
+    <action path="/signoff" type="org.apache.struts.beanaction.BeanAction"
+            name="accountBean" scope="session"
+            validate="false">
+      <forward name="success" redirect="true" path="index.shtml" />
+    </action>
+
+    <!-- ORDER ACTIONS -->
+
+    <action path="/newOrderForm" type="org.apache.struts.beanaction.BeanAction"
+            name="orderBean" scope="session"
+            validate="false">
+      <forward name="success" path="neworderform.tiles"/>
+    </action>
+
+    <action path="/newOrder" type="org.apache.struts.beanaction.BeanAction"
+            name="orderBean" scope="session"
+            validate="true" input="neworderform.tiles">
+      <forward name="confirm" path="confirmorder.tiles"/>
+      <forward name="shipping" path="shippingform.tiles"/>
+      <forward name="success" path="vieworder.tiles"/>
+    </action>
+
+    <action path="/listOrders" type="org.apache.struts.beanaction.BeanAction"
+            name="orderBean" scope="session"
+            validate="false">
+      <forward name="success" path="listorders.tiles"/>
+    </action>
+
+    <action path="/switchOrderPage" type="org.apache.struts.beanaction.BeanAction"
+            name="orderBean" scope="session"
+            validate="false">
+      <forward name="success" path="listorders.tiles"/>
+    </action>
+
+    <action path="/viewOrder" type="org.apache.struts.beanaction.BeanAction"
+            name="orderBean" scope="session"
+            validate="false">
+      <forward name="success" path="vieworder.tiles"/>
+    </action>
+
+  </action-mappings>
+
+  <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+  <message-resources parameter="properties.messages"/>
+  
+  <plug-in className="org.apache.struts.tiles.TilesPlugin">
+    <set-property 
+        property="definitions-config" 
+        value="/WEB-INF/tiles-defs.xml"/>
+    <set-property 
+        property="definitions-parser-validate" value="false" />
+  </plug-in>
+
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+        property="pathnames"
+        value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+  </plug-in>
+
+</struts-config>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Product">
+
+  <typeAlias alias="product" type="org.apache.ibatis.jgamestore.domain.Product"/>
+  <typeAlias alias="productSearch" type="org.apache.ibatis.jgamestore.domain.ProductSearchCriteria"/>
+
+  <cacheModel id="productCache" type="LRU">
+    <flushInterval hours="24"/>
+    <property name="size" value="100"/>
+  </cacheModel>
+
+  <select id="getProduct" resultClass="product" parameterClass="string" cacheModel="productCache">
+    SELECT
+      PRODUCTID,
+      NAME,
+      DESCRIPTION,
+      IMAGE,
+      CATEGORYID
+    FROM PRODUCT
+    WHERE PRODUCTID = #productId#
+  </select>
+
+  <select id="getProductListByCategory" resultClass="product" parameterClass="string" cacheModel="productCache">
+    SELECT
+      PRODUCTID,
+      NAME,
+      DESCRIPTION,
+      IMAGE,
+      CATEGORYID
+    FROM PRODUCT
+    WHERE CATEGORYID = #value#
+  </select>
+
+  <select id="getNewestProductList" resultClass="product" cacheModel="productCache">
+    SELECT
+      PRODUCTID,
+      NAME,
+      DESCRIPTION,
+      IMAGE,
+      CATEGORYID
+    FROM PRODUCT
+    WHERE PRODUCTID IN
+      (SELECT
+        MAX(PRODUCTID)
+      FROM PRODUCT
+      GROUP BY CATEGORYID)
+  </select>
+
+  <select id="searchProducts" resultClass="product" >
+    SELECT
+      PRODUCTID,
+      NAME,
+      DESCRIPTION,
+      IMAGE,
+      CATEGORYID
+    FROM PRODUCT
+    <dynamic prepend="WHERE">
+      <iterate property="keywordList" conjunction="OR">
+        lower(name) like #keywordList[]# OR 
+        lower(categoryid) like #keywordList[]# OR 
+        lower(description) like #keywordList[]#
+      </iterate>
+    </dynamic>
+  </select>
+  
+  <!-- 
+  SELECT
+    p.PRODUCTID AS PRODUCTID,
+    p.NAME  AS NAME,
+    p.DESCRIPTION AS DESCRIPTION,
+    p.IMAGE AS IMAGE,
+    p.CATEGORYID AS CATEGORYID
+  FROM Product p
+  INNER JOIN Category c ON
+    c.categoryId=p.categoryId
+  INNER JOIN Item i ON
+    i.productId = p.productId
+  WHERE
+    c.categoryId IN ('ACTADV')
+    AND
+    p.name LIKE ''
+    AND
+    p.description LIKE ''
+    AND
+    i.name LIKE ''
+    AND
+    i.description LIKE ''
+  -->
+  
+  <select id="searchProductsWithProductSearch" 
+          parameterClass="productSearch"
+          resultClass="product" >
+    SELECT DISTINCT
+      p.PRODUCTID,
+      p.NAME,
+      p.DESCRIPTION,
+      p.IMAGE,
+      p.CATEGORYID
+    FROM Product p
+    <isEqual property="itemProperties" compareValue="true">
+    INNER JOIN Item i ON i.productId=p.productId
+    </isEqual>
+    <dynamic prepend="WHERE">
+      <iterate 
+        property="categoryIds" 
+        open="p.categoryId IN (" close=")" 
+        conjunction="," prepend="BOGUS">
+        #categoryIds[]#
+      </iterate>
+      <isNotEmpty property="productName" prepend="AND">
+      p.name LIKE #productName#
+      </isNotEmpty>
+      <isNotEmpty property="productDescription" prepend="AND">
+      p.description LIKE #productDescription#
+      </isNotEmpty>
+      <isNotEmpty property="itemName" prepend="AND">
+      i.name LIKE #itemName#
+      </isNotEmpty>
+      <isNotEmpty property="itemDescription" prepend="AND">
+      i.description LIKE #itemDescription#
+      </isNotEmpty>
+    </dynamic>
+  </select>
+
+</sqlMap>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE daoConfig
+    PUBLIC "-//ibatis.apache.org//DTD DAO Configuration 2.0//EN"
+    "http://ibatis.apache.org/dtd/dao-2.dtd">
+
+<daoConfig>
+
+  <context>
+
+    <transactionManager type="SQLMAP">
+      <property name="SqlMapConfigResource"
+        value="org/apache/ibatis/jgamestore/persistence/sqlmapdao/sql/sql-map-config.xml"/>
+    </transactionManager>
+
+    <dao interface="org.apache.ibatis.jgamestore.persistence.iface.ItemDao"
+      implementation="org.apache.ibatis.jgamestore.persistence.sqlmapdao.ItemSqlMapDao"/>
+
+    <dao interface="org.apache.ibatis.jgamestore.persistence.iface.SequenceDao"
+      implementation="org.apache.ibatis.jgamestore.persistence.sqlmapdao.SequenceSqlMapDao"/>
+
+    <dao interface="org.apache.ibatis.jgamestore.persistence.iface.AccountDao"
+      implementation="org.apache.ibatis.jgamestore.persistence.sqlmapdao.AccountSqlMapDao"/>
+
+    <dao interface="org.apache.ibatis.jgamestore.persistence.iface.CategoryDao"
+      implementation="org.apache.ibatis.jgamestore.persistence.sqlmapdao.CategorySqlMapDao"/>
+
+    <dao interface="org.apache.ibatis.jgamestore.persistence.iface.ProductDao"
+      implementation="org.apache.ibatis.jgamestore.persistence.sqlmapdao.ProductSqlMapDao"/>
+
+    <dao interface="org.apache.ibatis.jgamestore.persistence.iface.OrderDao"
+      implementation="org.apache.ibatis.jgamestore.persistence.sqlmapdao.OrderSqlMapDao"/>
+
+  </context>
+
+</daoConfig>
